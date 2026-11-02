@@ -2,70 +2,22 @@
 
 ## 1. System Design
 
-**a. Initial design**
-
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
-
-**b. Design changes**
-
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
-
----
+My initial UML used `Owner`, `Pet`, `Task`, and `Scheduler`. Owner manages the household, Pet owns care tasks, Task represents one activity, and Scheduler works across pets. During implementation I stopped Scheduler from storing a duplicate task list. Instead, `Owner.all_tasks()` returns `(Pet, Task)` pairs, so there is one source of truth and every schedule entry retains its pet. I also added duration and a calculated end time because start time alone cannot detect overlaps.
 
 ## 2. Scheduling Logic and Tradeoffs
 
-**a. Constraints and priorities**
+The scheduler considers due date, completion status, start time, duration, priority, pet, recurrence, and available minutes. It removes tasks that are not pending on the selected date. With limited time, it selects high-priority work first and then displays it chronologically.
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
-
-**b. Tradeoffs**
-
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
-
----
+This greedy priority rule may leave minutes unused where several shorter, lower-priority tasks could fit. That is reasonable because medication and other high-priority care should come before maximizing schedule fullness, and the behavior is easy to explain.
 
 ## 3. AI Collaboration
 
-**a. How you used AI**
-
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
-
-**b. Judgment and verification**
-
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
-
----
+I used an AI coding agent to turn the class plan into stubs, implement methods, identify edge cases, connect Streamlit, and run tests. Prompts that named required behaviors and asked for test evidence were most useful. I did not accept adding database persistence or a repository class. It would add setup complexity without improving the required demonstration, so I kept Streamlit session state and verified the smaller design through the CLI, compilation, and tests.
 
 ## 4. Testing and Verification
 
-**a. What you tested**
-
-- What behaviors did you test?
-- Why were these tests important?
-
-**b. Confidence**
-
-- How confident are you that your scheduler works correctly?
-- What edge cases would you test next if you had more time?
-
----
+I tested completion, adding tasks, duplicate pet prevention, ordering, filters, daily/weekly recurrence, overlaps, adjacent tasks, available-time selection, and malformed times. These matter because scheduling bugs often occur at interval boundaries or after state changes. All 11 tests pass. Next I would test tasks spanning midnight, daylight-saving changes, deleting a recurring series, and browser-session persistence.
 
 ## 5. Reflection
 
-**a. What went well**
-
-- What part of this project are you most satisfied with?
-
-**b. What you would improve**
-
-- If you had another iteration, what would you improve or redesign?
-
-**c. Key takeaway**
-
-- What is one important thing you learned about designing systems or working with AI on this project?
+I am most satisfied that the CLI and app share the same domain classes instead of duplicating rules. Next I would add editing, deletion, saved user data, and a visual calendar. My key takeaway is that UML exposes ownership questions early, while tests make it safe to refine those decisions with AI assistance.

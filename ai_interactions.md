@@ -10,15 +10,15 @@
 
 **What task did you give the agent?**
 
-<!-- Describe the goal you asked the agent to accomplish -->
+Build PawPal+ from the starter while following the UML-first workflow, then verify the backend, Streamlit integration, tests, and documentation.
 
 **What did the agent do?**
 
-<!-- List the steps the agent took (files edited, commands run, etc.) -->
+The agent drafted the UML, created stubs, implemented the domain classes, added a CLI demonstration and Streamlit interface, wrote tests, ran them, and completed the project documentation.
 
 **What did you have to verify or fix manually?**
 
-<!-- Describe anything the agent got wrong or that required human review -->
+I reviewed the class responsibilities, recurrence state, and conflict boundaries. I also kept persistence out of scope so the design remained understandable.
 
 ---
 
