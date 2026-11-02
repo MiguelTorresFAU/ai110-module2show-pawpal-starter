@@ -1,0 +1,28 @@
+classDiagram
+    Owner "1" *-- "0..*" Pet : manages
+    Pet "1" *-- "0..*" Task : has
+    Scheduler --> Owner : organizes tasks for
+
+    class Owner {
+        +name
+        +pets
+        +add_pet()
+    }
+    class Pet {
+        +name
+        +species
+        +tasks
+        +add_task()
+    }
+    class Task {
+        +description
+        +time
+        +duration_minutes
+        +priority
+        +frequency
+        +completed
+        +mark_complete()
+    }
+    class Scheduler {
+        +owner
+    }
